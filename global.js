@@ -116,8 +116,8 @@ var createList = function(obj, el) {
 
 // https://v2.wp-api.org/reference/categories/
 wpposturl = 'https://www.webdesigndenhaag.net';
-//categories=14
-fetchUrlData( wpposturl+'/wp-json/wp/v2/posts?filter[category_name]=portfolio&per_page=10&orderby=date&order=desc', '#itemlist', function(){
+
+fetchUrlData( wpposturl+'/wp-json/wp/v2/posts?categories=14&per_page=10&orderby=date&order=desc', '#itemlist', function(){
 	swiperH.update();
 });
 
