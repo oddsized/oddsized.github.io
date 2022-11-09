@@ -116,9 +116,11 @@ var createList = function(obj, el) {
 
 // https://v2.wp-api.org/reference/categories/
 wpposturl = 'https://www.webdesigndenhaag.net';
-fetchUrlData( wpposturl+'/wp-json/wp/v2/posts?filter[categories]=portfolio&per_page=10&orderby=date&order=desc', '#itemlist', function(){
+//categories=14
+fetchUrlData( wpposturl+'/wp-json/wp/v2/posts?filter[category_name]=portfolio&per_page=10&orderby=date&order=desc', '#itemlist', function(){
 	swiperH.update();
 });
+
 
 var pageurl = 'https://webbouwer.org/blog/wp-json/wp/v2/pages';
 var pagebox = "#pagelist";
