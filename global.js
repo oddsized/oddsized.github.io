@@ -29,6 +29,8 @@ var swiperV = new Swiper('.swiper-container-v', {
 var swiperH = new Swiper('.swiper-container-h', {
   direction: 'horizontal',
   loop: true,
+  initialSlide: 0, //this one accept a number according to docs
+  //slidesPerColumn: 1, //number
   speed: 600,
   parallax: true,
   navigation: {
@@ -108,7 +110,11 @@ var createList = function(obj, el) {
   }
 
   $.each(list, function(index, value) { //var data = JSON.stringify(value);
-  	var item = $('<div class="swiper-slide color-3" data-swiper-parallax="-300">'+index + " - " + value.title.rendered+'</div>');
+		if( value.featured_media != 0 ){
+  	var item = $('<div class="swiper-slide color-3" data-swiper-parallax="-300" style="background-image:url('+value._embedded['wp:featuredmedia']['0'].source_url+');">'+index + " - " + value.title.rendered+' </div>');
+		}else{
+			var item = $('<div class="swiper-slide color-3" data-swiper-parallax="-300" >'+index + " - " + value.title.rendered+'</div>');
+		}
     $(el).append( item );
   });
 
