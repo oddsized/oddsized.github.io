@@ -1,268 +1,924 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <link rel="profile" href="https://gmpg.org/xfn/11">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <meta http-equiv="content-language" content="en" />
-  <meta name="description" content="Oddsized Interactive Creative Business, Art and ICT - Brand Register HTML Boilerplate" />
-  <meta name="keywords" content="oddsized, odd, sized, oddsize, oddsized interactive brand, creative, art, ict, web, design, register, boilerplate" />
-  <meta name="robots" content="all" />
-  <meta name="robots" content="index, nofollow" />
-
-  <title>Oddsized</title>
-
-  <link rel="alternate" type="application/rss+xml" title="Oddsized Interactive Brand Register" href="https://oddsized.com/developer/github/oddsized" />
-  <meta property="og:title" content="Oddsized Interactive - Brand Register HTML Boilerplate"/>
-  <meta property="og:description" content="Oddsized Brand Register - HTML Boilerplate"/>
-  <meta property="og:type" content="website"/>
-  <meta property="og:url" content="https://oddsized.com/"/>
-  <meta property="og:site_name" content="Oddsized - Entrepeneur in Creative Business, Art and ICT"/>
-  <meta property="og:image" content="https://raw.githubusercontent.com/oddsized/oddsized/refs/heads/main/media/ico/oddsized_icon_green.ico"/>
-
-  <link rel="icon" href="https://raw.githubusercontent.com/oddsized/oddsized/refs/heads/main/media/ico/oddsized_icon_green.ico" sizes="32x32" />
-  <link rel="icon" href="https://raw.githubusercontent.com/oddsized/oddsized/refs/heads/main/media/ico/oddsized_icon_green.ico" sizes="192x192" />
-  <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/oddsized/oddsized/refs/heads/main/media/ico/oddsized_icon_green.ico" />
-
-  <meta name="msapplication-TileImage" content="https://raw.githubusercontent.com/oddsized/oddsized/refs/heads/main/media/oddsized_icon_green.png" />
-
-
-     <script src="https://code.jquery.com/jquery-3.6.1.min.js" crossorigin="anonymous"></script>
-
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.2/TweenMax.min.js"></script>
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.2/utils/Draggable.min.js"></script>
-
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CP Müller — Oddsized Interactive</title>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.2/js/swiper.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.2/css/swiper.min.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet" />
 <style>
-	html{
-		width:100%;
-	}
-	body
-	{
-	padding:0px;
-	margin:0px;
-		width:100%;
-		min-height:100%;
-	}
-
-	#logobox
-	{
-		margin:40vh 0 0 30%;
-		width:120px;
-    float:left;
-	}
-
-	.container {
-	position:fixed;
-	top:0px;
-	left:0px;
-		width:100%;
-		height:100%;
-		z-index:-10;
-  overflow: hidden;
+/* ═══════════════════════════════════════════
+   DESIGN TOKENS
+═══════════════════════════════════════════ */
+:root {
+  --c-bg:        #0a0c0a;
+  --c-surface:   #0f1210;
+  --c-surface2:  #141a14;
+  --c-border:    #1c261c;
+  --c-border2:   #243024;
+  --c-accent:    #009945;
+  --c-accent-hi: #00c457;
+  --c-accent-lo: #006630;
+  --c-text:      #d8ddd8;
+  --c-muted:     #5a6b5a;
+  --c-muted2:    #8a9e8a;
+  --f-display:   'Bahnschrift', 'DIN Alternate', 'Franklin Gothic Medium', 'Arial Narrow', sans-serif;
+  --f-body:      'DM Mono', 'Consolas', monospace;
+  --ease:        cubic-bezier(0.16, 1, 0.3, 1);
+  --radius:      3px;
 }
 
-.sliding-background {
-  background-image:url('https://raw.githubusercontent.com/oddsized/oddsized/refs/heads/main/media/oddsized_logo_pattern_black_small.png');
-  background-repeat:repeat;
-  height: 2700px;
-  width: 5076px;
-  animation: slide 100s linear infinite;
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; height: 100%; overflow: hidden; }
+
+body {
+  background: var(--c-bg);
+  color: var(--c-text);
+  font-family: var(--f-body);
+  font-size: 13px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
 }
 
-@keyframes slide{
-  0%{
-    transform: translate3d(0, 0, 0);
-  }
-  100%{
-    transform: translate3d(-1692px, 0, 0);
-  }
+a { color: var(--c-accent); text-decoration: none; }
+a:hover { color: var(--c-accent-hi); }
+
+/* ═══════════════════════════════════════════
+   TOPBAR
+═══════════════════════════════════════════ */
+#topbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  height: 46px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 32px;
+  border-bottom: 1px solid var(--c-border);
+  background: rgba(10,12,10,.94);
+  backdrop-filter: blur(14px);
 }
 
-.main
-{
-  float:right;
-  width:60%;
+#topbar .logo {
+  font-family: var(--f-display);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  color: var(--c-accent);
+  text-transform: uppercase;
+}
+#topbar .logo span {
+  color: var(--c-muted2);
+  font-weight: 400;
+  font-size: 12px;
+  font-family: var(--f-body);
 }
 
-.frame-container {
-  position:relative;
-  background-color: #383838;
-  padding: 8px 8px 40px;
-  font-size: 25px;
-  text-align: center;
-  transition: all 0.2s;
-  margin: 8vh auto;
-  width: 90%;
-  -webkit-border-radius: 15px;
-  -moz-border-radius: 15px;
-  border-radius: 15px;
+#topbar nav { display: flex; gap: 0; }
+#topbar nav a {
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--c-muted);
+  padding: 0 16px;
+  height: 46px;
+  display: flex; align-items: center;
+  border-left: 1px solid var(--c-border);
+  transition: color .18s, background .18s;
+  font-family: var(--f-body);
 }
-.frame-container,
-.frame-container.size_0
-{
-  width: 96%;
-  max-width:968px;
-  height: 564px;
-}
-.frame-container.size_1
-{
-  width: 960px;
-  height:780px;
-}
-.frame-container.size_2
-{
-  width: 320px;
-  height: 580px;
-}
-.frame-container iframe
-{
+#topbar nav a:last-child { border-right: 1px solid var(--c-border); }
+#topbar nav a:hover { color: var(--c-accent); background: rgba(0,153,69,.05); }
+
+/* ═══════════════════════════════════════════
+   VERTICAL SWIPER
+═══════════════════════════════════════════ */
+.swiper-container-v {
   width: 100%;
-  height: 100%;
-  background-color:#ffffff;
-  border:none;
-  -webkit-border-radius: 6px;
-  -moz-border-radius: 6px;
-  border-radius: 6px;
+  height: 100vh;
+  padding-top: 46px;
+}
+.swiper-slide {
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.framesizebutton
-{
-  border: 1px solid #171717;
-  border-top: 1px solid #272727;
-  width: 48px;
-  height: 16px;
-  margin: 6px auto;
-  -webkit-border-radius: 14px;
-  -moz-border-radius: 14px;
-  border-radius: 14px;
+.swiper-pagination-v {
+  right: 0 !important;
+  width: 3px !important;
+}
+.swiper-pagination-v .swiper-pagination-bullet {
+  width: 3px !important;
+  height: 28px !important;
+  border-radius: 0 !important;
+  background: var(--c-border2) !important;
+  opacity: 1 !important;
+  display: block !important;
+  margin: 3px 0 !important;
+}
+.swiper-pagination-v .swiper-pagination-bullet-active {
+  background: var(--c-accent) !important;
+  height: 52px !important;
 }
 
-@media all and (max-width: 1200px) {
-  #logobox
-	{
-    display:block;
-    position:relative;
-		margin:5vh 0 1vh;
-		width:100%;
-    float: clear-both;
-    text-align: center;
-	}
-.main
-{
-  float: clear-both;
-  width:100%;
+/* ═══════════════════════════════════════════
+   SLIDE 1 — INTRO
+═══════════════════════════════════════════ */
+.slide-intro { background: var(--c-bg); }
+
+.slide-intro::before {
+  content: '';
+  position: absolute; inset: 0; z-index: 0;
+  background-image:
+    linear-gradient(var(--c-border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--c-border) 1px, transparent 1px);
+  background-size: 56px 56px;
+  opacity: .3;
+  pointer-events: none;
+}
+.slide-intro::after {
+  content: '';
+  position: absolute; inset: 0; z-index: 0;
+  background: radial-gradient(ellipse 70% 70% at center, transparent 20%, var(--c-bg) 80%);
+  pointer-events: none;
 }
 
+.intro-layout {
+  position: relative; z-index: 1;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 52px;
+  align-items: center;
+  max-width: 860px;
+  padding: 0 40px;
+  animation: fadeUp .8s var(--ease) both;
 }
 
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.intro-avatar { position: relative; width: 172px; flex-shrink: 0; }
+.intro-avatar img {
+  width: 172px; height: 172px;
+  border-radius: 4px;
+  display: block;
+  filter: grayscale(12%) contrast(1.05);
+  border: 1px solid var(--c-border2);
+}
+.intro-avatar::before {
+  content: '';
+  position: absolute; top: -6px; left: -6px;
+  width: 30px; height: 30px;
+  border-top: 2px solid var(--c-accent);
+  border-left: 2px solid var(--c-accent);
+  pointer-events: none;
+}
+.intro-avatar::after {
+  content: '';
+  position: absolute; bottom: -6px; right: -6px;
+  width: 30px; height: 30px;
+  border-bottom: 2px solid var(--c-accent-lo);
+  border-right: 2px solid var(--c-accent-lo);
+  pointer-events: none;
+}
+
+.intro-eyebrow {
+  font-size: 10px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--c-accent);
+  margin-bottom: 10px;
+  display: flex; align-items: center; gap: 10px;
+}
+.intro-eyebrow::before {
+  content: ''; display: block;
+  width: 22px; height: 1px; background: var(--c-accent);
+}
+
+.intro-text h1 {
+  font-family: var(--f-display);
+  font-size: clamp(2.2rem, 4.5vw, 3.6rem);
+  font-weight: 700;
+  letter-spacing: .01em;
+  line-height: 1.0;
+  color: #fff;
+  margin-bottom: 6px;
+}
+.intro-text h1 em { color: var(--c-accent); font-style: normal; }
+
+.intro-subtitle {
+  font-size: 11px;
+  letter-spacing: .11em;
+  text-transform: uppercase;
+  color: var(--c-muted);
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--c-border);
+}
+
+.intro-text p {
+  font-size: 12.5px; line-height: 1.85;
+  color: var(--c-muted2); max-width: 440px; margin-bottom: 28px;
+}
+
+.intro-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+.btn {
+  font-family: var(--f-body);
+  font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+  padding: 9px 20px; border-radius: var(--radius);
+  border: 1px solid var(--c-border2); color: var(--c-muted2);
+  background: transparent; cursor: pointer; display: inline-block;
+  transition: border-color .18s, color .18s, background .18s;
+}
+.btn:hover { border-color: var(--c-accent); color: var(--c-accent); background: rgba(0,153,69,.06); }
+.btn.primary { background: var(--c-accent); border-color: var(--c-accent); color: #000; font-weight: 500; }
+.btn.primary:hover { background: var(--c-accent-hi); border-color: var(--c-accent-hi); color: #000; }
+
+.slide-index {
+  position: absolute; bottom: 26px; right: 36px;
+  font-size: 10px; letter-spacing: .18em; color: var(--c-border2);
+  text-transform: uppercase; z-index: 1;
+}
+
+/* ═══════════════════════════════════════════
+   SLIDE 2 — ABOUT
+═══════════════════════════════════════════ */
+.slide-about { background: var(--c-surface); border-top: 1px solid var(--c-border); }
+
+.about-layout {
+  position: relative; z-index: 1;
+  max-width: 920px; width: 100%; padding: 0 40px;
+  display: grid; grid-template-columns: 1fr 1px 1fr; gap: 0;
+  align-items: start;
+}
+
+.about-divider { background: var(--c-border); align-self: stretch; margin: 0 48px; }
+
+.about-block { padding: 8px 0; }
+
+.section-label {
+  font-size: 10px; letter-spacing: .22em; text-transform: uppercase;
+  color: var(--c-accent); margin-bottom: 16px;
+  display: flex; align-items: center; gap: 10px;
+}
+.section-label::after { content: ''; flex: 1; height: 1px; background: var(--c-border); }
+
+.about-block h2 {
+  font-family: var(--f-display);
+  font-size: 1.55rem; font-weight: 700; color: #fff;
+  letter-spacing: .02em; margin-bottom: 16px; line-height: 1.15;
+}
+
+.about-block p { font-size: 12.5px; line-height: 1.82; color: var(--c-muted2); margin-bottom: 12px; }
+.about-block p strong { color: var(--c-text); }
+
+.service-list { list-style: none; margin-top: 18px; border-top: 1px solid var(--c-border); }
+.service-list li {
+  display: flex; align-items: center; gap: 12px;
+  font-size: 12px; padding: 9px 0;
+  border-bottom: 1px solid var(--c-border);
+  color: var(--c-text); letter-spacing: .02em;
+}
+.service-list li .dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--c-accent); flex-shrink: 0;
+}
+
+.tag-cloud { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 18px; }
+.tag {
+  font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase;
+  background: var(--c-border); color: var(--c-muted2);
+  padding: 4px 10px; border-radius: 2px; border: 1px solid var(--c-border2);
+}
+
+/* ═══════════════════════════════════════════
+   SLIDE 3 — GALLERY
+═══════════════════════════════════════════ */
+.slide-gallery {
+  background: #080a08;
+  align-items: flex-start; flex-direction: column; padding: 0;
+}
+
+.gallery-topbar {
+  position: absolute; top: 0; left: 0; right: 0; z-index: 20;
+  height: 44px; display: flex; align-items: center; justify-content: space-between;
+  padding: 0 32px; border-bottom: 1px solid var(--c-border);
+  background: rgba(8,10,8,.92); backdrop-filter: blur(8px);
+}
+.gallery-topbar h2 {
+  font-family: var(--f-display);
+  font-size: 13px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #fff;
+}
+.gallery-topbar .g-meta { display: flex; align-items: center; gap: 20px; }
+.gallery-topbar .counter { font-size: 11px; color: var(--c-muted); letter-spacing: .1em; font-variant-numeric: tabular-nums; }
+.gallery-topbar .all-link { font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--c-accent); }
+
+.swiper-container-h {
+  width: 100%;
+  height: calc(100vh - 46px);
+  padding-top: 44px;
+}
+
+.portfolio-slide {
+  position: relative; overflow: hidden;
+  background: var(--c-surface);
+  border-right: 1px solid var(--c-border);
+  cursor: pointer;
+}
+.portfolio-slide img {
+  width: 100%; height: 40%; object-fit: cover; display: block;
+  filter: grayscale(22%) brightness(.7) contrast(1.06);
+  transition: filter .4s var(--ease), transform .5s var(--ease);
+}
+.portfolio-slide:hover img { filter: grayscale(0%) brightness(.88); transform: scale(1.04); }
+
+.portfolio-caption {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 48px 16px 14px;
+  background: linear-gradient(to top, rgba(0,0,0,.93) 0%, rgba(0,0,0,.35) 60%, transparent 100%);
+  transform: translateY(6px); transition: transform .3s var(--ease);
+}
+.portfolio-slide:hover .portfolio-caption { transform: translateY(0); }
+
+.portfolio-caption h3 {
+  font-family: var(--f-display);
+  font-size: .82rem; font-weight: 700; color: #fff; margin-bottom: 3px;
+  letter-spacing: .02em; line-height: 1.25;
+}
+.portfolio-caption .cat { font-size: 9.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--c-accent); }
+
+.portfolio-caption .ext-link {
+  position: absolute; top: 12px; right: 12px;
+  font-size: 9px; letter-spacing: .14em; text-transform: uppercase;
+  border: 1px solid rgba(255,255,255,.18); padding: 4px 9px;
+  color: rgba(255,255,255,.55); border-radius: var(--radius);
+  opacity: 0; transition: opacity .25s, border-color .25s, color .25s, background .25s;
+}
+.portfolio-slide:hover .ext-link { opacity: 1; }
+.portfolio-caption .ext-link:hover { background: var(--c-accent); border-color: var(--c-accent); color: #000; }
+
+/* swiper nav */
+.swiper-button-next, .swiper-button-prev {
+  color: var(--c-accent) !important;
+  background: rgba(8,10,8,.8);
+  width: 34px !important; height: 34px !important;
+  border-radius: var(--radius);
+  border: 1px solid var(--c-border2);
+  top: calc(50% + 22px) !important;
+}
+.swiper-button-next { right: 10px !important; }
+.swiper-button-prev { left: 10px !important; }
+.swiper-button-next::after, .swiper-button-prev::after { font-size: 12px !important; }
+
+.swiper-pagination-h { bottom: 8px !important; }
+.swiper-pagination-h .swiper-pagination-bullet {
+  background: var(--c-muted) !important; opacity: .45 !important;
+  width: 5px !important; height: 5px !important;
+}
+.swiper-pagination-h .swiper-pagination-bullet-active {
+  background: var(--c-accent) !important; opacity: 1 !important;
+  width: 18px !important; border-radius: 3px !important;
+}
+
+/* ═══════════════════════════════════════════
+   SLIDE 4 — CONTACT
+═══════════════════════════════════════════ */
+.slide-contact { background: var(--c-bg); border-top: 1px solid var(--c-border); }
+.slide-contact::before {
+  content: ''; position: absolute; inset: 0; z-index: 0;
+  background: repeating-linear-gradient(
+    -45deg, transparent, transparent 30px,
+    rgba(0,153,69,.012) 30px, rgba(0,153,69,.012) 31px
+  );
+  pointer-events: none;
+}
+
+.contact-layout {
+  position: relative; z-index: 1;
+  max-width: 860px; width: 100%; padding: 0 40px;
+  display: grid; grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto 1fr; gap: 0 64px; align-items: start;
+}
+
+.contact-heading {
+  grid-column: 1 / -1; margin-bottom: 34px; padding-bottom: 22px;
+  border-bottom: 1px solid var(--c-border);
+  display: flex; align-items: baseline; justify-content: space-between; gap: 20px;
+}
+.contact-heading h2 {
+  font-family: var(--f-display);
+  font-size: clamp(1.8rem, 3vw, 2.8rem); font-weight: 700;
+  color: #fff; letter-spacing: .02em; line-height: 1.05;
+}
+.contact-heading h2 em { color: var(--c-accent); font-style: normal; }
+.contact-heading .since { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--c-muted); white-space: nowrap; }
+
+.contact-block .block-label {
+  font-size: 10px; letter-spacing: .22em; text-transform: uppercase;
+  color: var(--c-accent); margin-bottom: 16px;
+  display: flex; align-items: center; gap: 10px;
+}
+.contact-block .block-label::after { content: ''; flex: 1; max-width: 36px; height: 1px; background: var(--c-accent-lo); }
+
+.contact-block address {
+  font-style: normal; font-size: 12.5px; line-height: 1.9; color: var(--c-muted2);
+}
+.contact-block address strong { color: var(--c-text); display: block; }
+.contact-block address a { color: var(--c-muted2); }
+.contact-block address a:hover { color: var(--c-accent); }
+
+.meta-row { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+.meta-pill {
+  font-size: 9.5px; letter-spacing: .1em;
+  background: var(--c-border); border: 1px solid var(--c-border2);
+  color: var(--c-muted); padding: 3px 9px; border-radius: 2px;
+}
+
+.contact-cta {
+  margin-top: 22px;
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--c-accent); color: #000;
+  font-family: var(--f-body); font-size: 10px; letter-spacing: .14em;
+  text-transform: uppercase; padding: 10px 22px;
+  border-radius: var(--radius); font-weight: 500; transition: background .18s;
+}
+.contact-cta:hover { background: var(--c-accent-hi); color: #000; }
+
+.social-links { display: flex; flex-direction: column; }
+.social-links a {
+  display: flex; align-items: center; gap: 12px;
+  font-size: 11.5px; color: var(--c-muted2); padding: 9px 0;
+  border-bottom: 1px solid var(--c-border); letter-spacing: .02em;
+  transition: color .18s, padding-left .18s;
+}
+.social-links a:first-child { border-top: 1px solid var(--c-border); }
+.social-links a:hover { color: var(--c-accent); padding-left: 6px; }
+.social-links a .arrow { color: var(--c-accent-lo); font-size: 11px; transition: color .18s; }
+.social-links a:hover .arrow { color: var(--c-accent); }
+
+.footer-note {
+  position: absolute; bottom: 16px; left: 0; right: 0; text-align: center;
+  font-size: 9.5px; color: var(--c-border2); letter-spacing: .12em; text-transform: uppercase; z-index: 1;
+}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════ */
+@media (max-width: 700px) {
+  .intro-layout { grid-template-columns: 1fr; gap: 22px; padding: 0 20px; }
+  .intro-avatar { width: 110px; }
+  .intro-avatar img { width: 110px; height: 110px; }
+  .about-layout { grid-template-columns: 1fr; }
+  .about-divider { display: none; }
+  .contact-layout { grid-template-columns: 1fr; }
+  .contact-heading { flex-direction: column; gap: 4px; }
+  #topbar nav a { padding: 0 8px; font-size: 10px; }
+}
 </style>
-
 </head>
-
 <body>
-<div class="container">
-<div class="sliding-background"></div>
+
+<div id="topbar">
+  <div class="logo">CP Müller <span>/ Oddsized Interactive</span></div>
+  <nav>
+    <a href="#slide1">Intro</a>
+    <a href="#slide2">About</a>
+    <a href="#slide3">Work</a>
+    <a href="#slide4">Contact</a>
+  </nav>
 </div>
 
-	<div id="logobox">
-		<img src="https://raw.githubusercontent.com/oddsized/oddsized/refs/heads/main/media/oddsized_icon_green.png" width="120" height="auto" />
-	</div>
+<div class="swiper-container swiper-container-v" id="swiperV">
+  <div class="swiper-wrapper">
 
-  <div class="main">
+    <!-- SLIDE 1: INTRO -->
+    <div class="swiper-slide slide-intro" data-hash="slide1">
+      <div class="intro-layout">
+        <div class="intro-avatar">
+          <img src="https://raw.githubusercontent.com/oddsized/oddsized/refs/heads/main/media/oddsized_icon_green.png" alt="Oddsized - CP Müller" />
+        </div>
+        <div class="intro-text">
+          <div class="intro-eyebrow">Den Haag · The Netherlands · Est. 1998</div>
+          <h1>CP <em>Müller</em> MA</h1>
+          <div class="intro-subtitle">Oddsized Interactive &nbsp;·&nbsp; Webdesign Den Haag &nbsp;·&nbsp; Webbouwer</div>
+          <p>Full-stack webdesign, development, graphic design and interactive media from The Hague. Art, design &amp; multimedia projects — exploration, reflection, research and education in art, culture, technology, hyperreality and future society.</p>
+          <div class="intro-actions">
+            <a href="#slide3" class="btn primary" id="btnWork">View Work ↓</a>
+            <a href="https://oddsized.com/" target="_blank" class="btn">Oddsized.com</a>
+            <a href="https://webdesigndenhaag.net/" target="_blank" class="btn">WebdesignDenHaag.net</a>
+          </div>
+        </div>
+      </div>
+      <span class="slide-index">01 / 04</span>
+    </div>
 
-  <!-- //jsfiddle.net/webbouwer/75a8v3Lq/1/embedded/result/dark/ -->
+    <!-- SLIDE 2: ABOUT -->
+    <div class="swiper-slide slide-about" data-hash="slide2">
+      <div class="about-layout">
+        <div class="about-block">
+          <div class="section-label">Creative Studio</div>
+          <h2>Oddsized Interactive™</h2>
+          <p>Art, Design &amp; Multimedia projects by <strong>CP Müller MA</strong>. Exploration, reflection, research and education in art, culture, technology, hyperreality and future society.</p>
+          <p>Exploring consciousness, hyper-reality and fractal realities — geometric sinkholes, frequencies of love, waves of utter dystopia — in philosophy and multimedia works available as investment NFT via Rarible, Opensea and Manifold.</p>
+          <div class="tag-cloud">
+            <span class="tag">Art & design</span>
+            <span class="tag">ICT</span>
+            <span class="tag">Consultancy & Strategy</span>
+            <span class="tag">Design Thinking</span>
+            <span class="tag">Multimedia</span>
+            <span class="tag">Webdevelopment</span>
+            <span class="tag">Philosophy & research</span>
+            <span class="tag">Architecure & composing</span>
+            <span class="tag">Education & Training</span>
+            <span class="tag">Hyper Real Culture</span>
+          </div>
+        </div>
+        <div class="about-divider"></div>
+        <div class="about-block">
+          <div class="section-label">Web Agency</div>
+          <h2>Webdesign Den Haag™</h2>
+          <p>More than <strong>25 years of experience</strong> in webdesign, graphic design, interactive design, web development and hosting management. WordPress CMS, custom web application development, AI integration and full consultancy.</p>
+          <ul class="service-list">
+            <li><span class="dot"></span>Webdesign &amp; Web Development</li>
+            <li><span class="dot"></span>Graphic Design &amp; Illustration</li>
+            <li><span class="dot"></span>WordPress CMS — Custom builds</li>
+            <li><span class="dot"></span>Web Application Development</li>
+            <li><span class="dot"></span>Hosting, Domain &amp; Email Management</li>
+            <li><span class="dot"></span>Maintenance, Security &amp; Support</li>
+            <li><span class="dot"></span>AI Integration &amp; Consultancy</li>
+          </ul>
+        </div>
+      </div>
+      <span class="slide-index">02 / 04</span>
+    </div>
 
-  <iframe name="mobiframe" width="100%" height="300" src="https://webdesigndenhaag.net/" allowfullscreen="allowfullscreen" allowpaymentrequest frameborder="0"></iframe>
+    <!-- SLIDE 3: GALLERY -->
+    <div class="swiper-slide slide-gallery" data-hash="slide3">
+      <div class="gallery-topbar">
+        <h2>Selected Work</h2>
+        <div class="g-meta">
+          <span class="counter" id="galleryCounter">01 / 29</span>
+          <a class="all-link" href="https://oddsized.com/oddsized-portfolio/" target="_blank">Full portfolio ↗</a>
+        </div>
+      </div>
+      <div class="swiper-container swiper-container-h" id="swiperH">
+        <div id="itemlist" class="swiper-wrapper">
+
+          <div class="swiper-slide portfolio-slide">
+            <img src="https://oddsized.com/wp-content/uploads/2023/02/210918_ZOET_ZOUT_KAART-e1671479966630-692x675-1-400x284.jpg" alt="Zee-Plaats-Werk-Land" loading="lazy" />
+            <div class="portfolio-caption">
+              <a class="ext-link" href="https://oddsized.com/project/website-zee-plaats-werk-land/" target="_blank">View ↗</a>
+              <h3>Zee-Plaats-Werk-Land</h3><span class="cat">Platform</span>
+            </div>
+          </div>
+
+          <div class="swiper-slide portfolio-slide">
+            <img src="https://oddsized.com/wp-content/uploads/2023/01/header_bg_2022-400x284.jpg" alt="Crossover Hillegonda" loading="lazy" />
+            <div class="portfolio-caption">
+              <a class="ext-link" href="https://oddsized.com/project/crossover-hillegonda-website/" target="_blank">View ↗</a>
+              <h3>Crossover Hillegonda</h3><span class="cat">Culture &amp; Events</span>
+            </div>
+          </div>
+
+          <div class="swiper-slide portfolio-slide">
+            <img src="https://oddsized.com/wp-content/uploads/2022/09/EekhartenEekhart_frontpage-400x284.jpg" alt="Eekhart en Eekhart" loading="lazy" />
+            <div class="portfolio-caption">
+              <a class="ext-link" href="https://oddsized.com/project/eekhart-en-eekhart-website/" target="_blank">View ↗</a>
+              <h3>Eekhart en Eekhart</h3><span class="cat">Corporate</span>
+            </div>
+          </div>
+
+          <div class="swiper-slide portfolio-slide">
+            <img src="https://oddsized.com/wp-content/uploads/2022/09/ponte-interim-web-400x284.jpg" alt="Ponte Interim" loading="lazy" />
+            <div class="portfolio-caption">
+              <a class="ext-link" href="https://oddsized.com/project/ponte-interim-website/" target="_blank">View ↗</a>
+              <h3>Ponte Interim</h3><span class="cat">Business</span>
+            </div>
+          </div>
+
+          <div class="swiper-slide portfolio-slide">
+            <img src="https://oddsized.com/wp-content/uploads/2019/08/container_view-400x284.jpg" alt="De Besturing" loading="lazy" />
+            <div class="portfolio-caption">
+              <a class="ext-link" href="https://oddsized.com/project/webdesign-website-debesturing/" target="_blank">View ↗</a>
+              <h3>De Besturing</h3><span class="cat">Location &amp; Venue</span>
+            </div>
+          </div>
+
+          <div class="swiper-slide portfolio-slide">
+            <img src="https://oddsized.com/wp-content/uploads/2014/06/Tiddo-de-Ruiter-3180-960x641-1-400x284.jpg" alt="Tiddo de Ruiter" loading="lazy" />
+            <div class="portfolio-caption">
+              <a class="ext-link" href="https://oddsized.com/project/webdesign-website-tiddo-de-ruiter-portfolio-site/" target="_blank">View ↗</a>
+              <h3>Tiddo de Ruiter</h3><span class="cat">Portfolio</span>
+            </div>
+          </div>
+
+          <div class="swiper-slide portfolio-slide">
+            <img src="https://oddsized.com/wp-content/uploads/2021/11/deHoekseSchatkist-Hoeks-erfgoed-400x284.jpg" alt="De Hoekse Schatkist" loading="lazy" />
+            <div class="portfolio-caption">
+              <a class="ext-link" href="https://oddsized.com/project/de-hoekse-schatkist/" target="_blank">View ↗</a>
+              <h3>De Hoekse Schatkist</h3><span class="cat">Heritage</span>
+            </div>
+          </div>
+
+          <div class="swiper-slide portfolio-slide">
+            <img src="https://oddsized.com/wp-content/uploads/2021/02/slimmerwerkenacademy-400x284.jpg" alt="Slimmer Werken Academy" loading="lazy" />
+            <div class="portfolio-caption">
+              <a class="ext-link" href="https://oddsized.com/project/slimmer-werken-academy/" target="_blank">View ↗</a>
+              <h3>Slimmer Werken Academy</h3><span class="cat">Education</span>
+            </div>
+          </div>
+
+          <div class="swiper-slide portfolio-slide">
+            <img src="https://oddsized.com/wp-content/uploads/2018/02/photo-1505491230718-f9a2251661f9-400x284.jpg" alt="Stichting IDB" loading="lazy" />
+            <div class="portfolio-caption">
+              <a class="ext-link" href="https://oddsized.com/project/digitaal-portaal-stichting-idb/" target="_blank">View ↗</a>
+              <h3>Stichting IDB</h3><span class="cat">Social / NGO</span>
+            </div>
+          </div>
+
+          <div class="swiper-slide portfolio-slide">
+            <img src="https://oddsized.com/wp-content/uploads/2021/07/stoutfusion-collectie2022-400x284.jpg" alt="Stout Fusion" loading="lazy" />
+            <div class="portfolio-caption">
+              <a class="ext-link" href="https://oddsized.com/project/stout-fusion/" target="_blank">View ↗</a>
+              <h3>Stout Fusion</h3><span class="cat">E-commerce</span>
+            </div>
+          </div>
+
+          <div class="swiper-slide portfolio-slide">
+            <img src="https://oddsized.com/wp-content/uploads/2021/05/QMF-trading_largebg-400x284.jpg" alt="QMF Trading" loading="lazy" />
+            <div class="portfolio-caption">
+              <a class="ext-link" href="https://oddsized.com/project/qmf-trading/" target="_blank">View ↗</a>
+              <h3>QMF Trading</h3><span class="cat">Finance</span>
+            </div>
+          </div>
+
+          <div class="swiper-slide portfolio-slide">
+            <img src="https://oddsized.com/wp-content/uploads/2023/02/kunstplaats_website_voorpagina-400x284.jpg" alt="Stichting Kunstplaats" loading="lazy" />
+            <div class="portfolio-caption">
+              <a class="ext-link" href="https://oddsized.com/project/stichting-kunstplaats/" target="_blank">View ↗</a>
+              <h3>Stichting Kunstplaats</h3><span class="cat">Cultural Foundation</span>
+            </div>
+          </div>
+
+          <div class="swiper-slide portfolio-slide">
+            <img src="https://oddsized.com/wp-content/uploads/2021/02/Screenshot_2020-02-29-Werk-slimmer-niet-harder-–-Betere-resultaten-meer-werkplezier--400x284.png" alt="Werk Slimmer Niet Harder" loading="lazy" />
+            <div class="portfolio-caption">
+              <a class="ext-link" href="https://oddsized.com/project/werk-slimmer-niet-harder/" target="_blank">View ↗</a>
+              <h3>Werk Slimmer Niet Harder</h3><span class="cat">Coaching</span>
+            </div>
+          </div>
+
+          <div class="swiper-slide portfolio-slide">
+            <img src="https://oddsized.com/wp-content/uploads/2019/09/Ruimtelijkeonderbouwing-bestemmingsplan-400x284.jpg" alt="Oase Stedenbouw" loading="lazy" />
+            <div class="portfolio-caption">
+              <a class="ext-link" href="https://oddsized.com/project/website-design-oase-stedenbouw-en-landschap/" target="_blank">View ↗</a>
+              <h3>Oase Stedenbouw</h3><span class="cat">Urban Planning</span>
+            </div>
+          </div>
+
+          <div class="swiper-slide portfolio-slide">
+            <img src="https://oddsized.com/wp-content/uploads/2019/09/3f3c6e74-4dcd-4092-854a-64924c16d2e7-400x284.jpg" alt="RE-source" loading="lazy" />
+            <div class="portfolio-caption">
+              <a class="ext-link" href="https://oddsized.com/project/webdesign-website-digitaal-platform-re-source/" target="_blank">View ↗</a>
+              <h3>RE-source</h3><span class="cat">Dutch Design Award</span>
+            </div>
+          </div>
+
+          <div class="swiper-slide portfolio-slide">
+            <img src="https://oddsized.com/wp-content/uploads/2019/08/HelderHoogendoorn_comp1-400x284.jpg" alt="Helder Hoogendoorn" loading="lazy" />
+            <div class="portfolio-caption">
+              <a class="ext-link" href="https://oddsized.com/project/webdesign-website-logo-helder-hoogendoorn-digitaal-portfolio/" target="_blank">View ↗</a>
+              <h3>Helder Hoogendoorn</h3><span class="cat">Portfolio</span>
+            </div>
+          </div>
+
+          <div class="swiper-slide portfolio-slide">
+            <img src="https://oddsized.com/wp-content/uploads/2019/08/Screenshot_2020-02-29-Das-Glueck-concept-grafisch-ontwerp-en-illustratie-Judith-Haagh-concept-grafisch-ontwerp-en-ill...-400x284.png" alt="Das Glueck" loading="lazy" />
+            <div class="portfolio-caption">
+              <a class="ext-link" href="https://oddsized.com/project/webdesign-website-das-glueck-online-portfolio/" target="_blank">View ↗</a>
+              <h3>Das Glueck</h3><span class="cat">Graphic Design</span>
+            </div>
+          </div>
+
+          <div class="swiper-slide portfolio-slide">
+            <img src="https://oddsized.com/wp-content/uploads/2019/06/meeting20200123_130454-400x284.jpg" alt="Pand Zuid West" loading="lazy" />
+            <div class="portfolio-caption">
+              <a class="ext-link" href="https://oddsized.com/project/pand-zuid-west/" target="_blank">View ↗</a>
+              <h3>Pand Zuid West</h3><span class="cat">Location</span>
+            </div>
+          </div>
+
+          <div class="swiper-slide portfolio-slide">
+            <img src="https://oddsized.com/wp-content/uploads/2015/04/OrderElectrus2-400x284.jpg" alt="Floris Kaayk" loading="lazy" />
+            <div class="portfolio-caption">
+              <a class="ext-link" href="https://oddsized.com/project/webdesign-website-floris-kaayk-portfolio-site/" target="_blank">View ↗</a>
+              <h3>Floris Kaayk</h3><span class="cat">Art Portfolio</span>
+            </div>
+          </div>
+
+          <div class="swiper-slide portfolio-slide">
+            <img src="https://oddsized.com/wp-content/uploads/2019/02/Screenshot_2020-12-11-Van-Itallie-Management-Finance-VIMF-Interim-management-finance-en-HRM-Professionals-werving-en-s...-e1676755935918-400x284.png" alt="Van Itallie VIMF" loading="lazy" />
+            <div class="portfolio-caption">
+              <a class="ext-link" href="https://oddsized.com/project/van-itallie-interim-management-and-finance/" target="_blank">View ↗</a>
+              <h3>Van Itallie VIMF</h3><span class="cat">Interim Management</span>
+            </div>
+          </div>
+
+          <div class="swiper-slide portfolio-slide">
+            <img src="https://oddsized.com/wp-content/uploads/2023/02/smartpaper_logo-400x284.jpg" alt="Smart Paper" loading="lazy" />
+            <div class="portfolio-caption">
+              <a class="ext-link" href="https://oddsized.com/project/smart-paper-brand-logo/" target="_blank">View ↗</a>
+              <h3>Smart Paper</h3><span class="cat">Branding &amp; Logo</span>
+            </div>
+          </div>
+
+          <div class="swiper-slide portfolio-slide">
+            <img src="https://oddsized.com/wp-content/uploads/2013/05/website_voorpagina-400x284.jpg" alt="Natuurlijk in je Kracht" loading="lazy" />
+            <div class="portfolio-caption">
+              <a class="ext-link" href="https://oddsized.com/project/website-design-natuurlijk-in-je-kracht/" target="_blank">View ↗</a>
+              <h3>Natuurlijk in je Kracht</h3><span class="cat">Coaching</span>
+            </div>
+          </div>
+
+          <div class="swiper-slide portfolio-slide">
+            <img src="https://oddsized.com/wp-content/uploads/2023/01/early-robots-logo-400x284.jpg" alt="Early Robots STEM" loading="lazy" />
+            <div class="portfolio-caption">
+              <a class="ext-link" href="https://oddsized.com/project/early-robots-stem-education/" target="_blank">View ↗</a>
+              <h3>Early Robots STEM</h3><span class="cat">Education</span>
+            </div>
+          </div>
+
+          <div class="swiper-slide portfolio-slide">
+            <img src="https://oddsized.com/wp-content/uploads/2017/03/bespreking_card-400x284.jpg" alt="De Haagse Maatschap" loading="lazy" />
+            <div class="portfolio-caption">
+              <a class="ext-link" href="https://oddsized.com/project/webdesign-website-de-haagse-maatschap/" target="_blank">View ↗</a>
+              <h3>De Haagse Maatschap</h3><span class="cat">Professional Services</span>
+            </div>
+          </div>
+
+          <div class="swiper-slide portfolio-slide">
+            <img src="https://oddsized.com/wp-content/uploads/2016/03/Between_Realities-360x284.jpg" alt="Between Realities" loading="lazy" />
+            <div class="portfolio-caption">
+              <a class="ext-link" href="https://oddsized.com/project/webdesign-website-between-realities-digitaal-platform/" target="_blank">View ↗</a>
+              <h3>Between Realities</h3><span class="cat">Digital Platform</span>
+            </div>
+          </div>
+
+          <div class="swiper-slide portfolio-slide">
+            <img src="https://oddsized.com/wp-content/uploads/2016/02/Kartiniprijs-20160000-400x284.jpg" alt="Kartini Prijs" loading="lazy" />
+            <div class="portfolio-caption">
+              <a class="ext-link" href="https://oddsized.com/project/webdesign-website-kartini-prijs/" target="_blank">View ↗</a>
+              <h3>Kartini Prijs</h3><span class="cat">Award &amp; Foundation</span>
+            </div>
+          </div>
+
+          <div class="swiper-slide portfolio-slide">
+            <img src="https://oddsized.com/wp-content/uploads/2015/04/wallpaper-400x284.jpg" alt="MM Garden" loading="lazy" />
+            <div class="portfolio-caption">
+              <a class="ext-link" href="https://oddsized.com/project/webdesign-website-mm-garden/" target="_blank">View ↗</a>
+              <h3>MM Garden</h3><span class="cat">Garden &amp; Landscape</span>
+            </div>
+          </div>
+
+          <div class="swiper-slide portfolio-slide">
+            <img src="https://oddsized.com/wp-content/uploads/2023/02/cohesie_logo-400x284.jpg" alt="COHESIE" loading="lazy" />
+            <div class="portfolio-caption">
+              <a class="ext-link" href="https://oddsized.com/project/cohesie/" target="_blank">View ↗</a>
+              <h3>COHESIE</h3><span class="cat">Branding</span>
+            </div>
+          </div>
+
+          <div class="swiper-slide portfolio-slide">
+            <img src="https://oddsized.com/wp-content/uploads/2023/01/chm-engineering-logo.jpg" alt="CHM Engineering" loading="lazy" />
+            <div class="portfolio-caption">
+              <a class="ext-link" href="https://oddsized.com/project/chm-engineering/" target="_blank">View ↗</a>
+              <h3>CHM Engineering</h3><span class="cat">Engineering</span>
+            </div>
+          </div>
+
+        </div><!-- /#itemlist -->
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-pagination swiper-pagination-h"></div>
+      </div>
+      <span class="slide-index" style="z-index:25;bottom:18px;">03 / 04</span>
+    </div>
+
+    <!-- SLIDE 4: CONTACT -->
+    <div class="swiper-slide slide-contact" data-hash="slide4">
+      <div class="contact-layout">
+        <div class="contact-heading">
+          <h2>Let's <em>work</em> together.</h2>
+          <span class="since">Webdesign since 1998</span>
+        </div>
+        <div class="contact-block">
+          <div class="block-label">Contact</div>
+          <address>
+            <strong>CP Müller MA</strong>
+            Oddsized Interactive<br />
+            Heelsumstraat 49<br />
+            2573NG Den Haag, NL<br /><br />
+            T: <a href="tel:0031641611661">+31 (0)6 41 61 16 61</a>
+          </address>
+          <div class="meta-row">
+            <span class="meta-pill">KVK 27256460</span>
+            <span class="meta-pill">BTW NL001968757B56</span>
+          </div>
+          <a class="contact-cta" href="https://webdesigndenhaag.net/#contact" target="_blank">Send a message ↗</a>
+        </div>
+        <div class="contact-block">
+          <div class="block-label">Online</div>
+          <div class="social-links">
+            <a href="https://oddsized.com/" target="_blank"><span class="arrow">↗</span> oddsized.com</a>
+            <a href="https://webdesigndenhaag.net/" target="_blank"><span class="arrow">↗</span> webdesigndenhaag.net</a>
+            <a href="https://www.linkedin.com/in/oddsized/" target="_blank"><span class="arrow">↗</span> linkedin.com/in/oddsized</a>
+            <a href="https://rarible.com/oddsized" target="_blank"><span class="arrow">↗</span> Oddsized Art @ Rarible</a>
+            <a href="https://manifold.gallery/oddsized" target="_blank"><span class="arrow">↗</span> Oddsized Art @ Manifold</a>
+            <a href="https://github.com/webbouwer" target="_blank"><span class="arrow">↗</span> github.com/webbouwer</a>
+            <a href="https://github.com/oddsized" target="_blank"><span class="arrow">↗</span> github.com/oddsized</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-note">© 2026 CP Müller &nbsp;·&nbsp; Oddsized Interactive™ &nbsp;·&nbsp; Webdesign Den Haag™</div>
+      <span class="slide-index">04 / 04</span>
+    </div>
 
   </div>
+  <div class="swiper-pagination swiper-pagination-v"></div>
+</div>
 
-  <script>
+<script>
+$(function () {
 
-  jQuery(function($){
+  var swiperV = new Swiper('#swiperV', {
+    direction: 'vertical',
+    slidesPerView: 1,
+    spaceBetween: 0,
+    mousewheel: { sensitivity: 1, releaseOnEdges: false },
+    hashNavigation: { watchState: true },
+    pagination: { el: '.swiper-pagination-v', clickable: true },
+    parallax: true,
+    speed: 680,
+  });
 
-  	$("iframe").wrap("<div class='frame-container size_2'/>");
-  	$(".frame-container").append("<div class='framesizebutton'></div>");
-
-  	var framesize = 0;
-
-  	function isTouch(){
-  	   var el = document.createElement('div');
-  	   el.setAttribute('ongesturestart', 'return;');
-  	   if(typeof el.ongesturestart == "function"){
-  		  return true;
-  	   }else {
-  		  return false
-  	   }
-  	}
-
-  	if( isTouch() ){
-  		$(".frame-container").addClass("mobile");
-  	}
-
-    /*
-  	$("body").on("click", ".frame-container", function(e){
-
-      if( $(window).width() > 540 ){
-        framesize++;
-        if(framesize == 3){
-        framesize = 0;
-        }
-  	  $(".frame-container").removeClass( "size_1 size_2 size_0" );
-  	  $(".frame-container").addClass( "size_" + framesize);
-  	  //console.log(framesize);
-
-      }else{
-      	$(".frame-container").removeClass( "size_1 size_2 size_0" );
-      	$(".frame-container").addClass( "size_2");
+  var swiperH = new Swiper('#swiperH', {
+    direction: 'horizontal',
+    slidesPerView: 4,
+    spaceBetween: 0,
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+    pagination: { el: '.swiper-pagination-h', clickable: true },
+    keyboard: { enabled: true, onlyInViewport: true },
+    breakpoints: {
+      0:    { slidesPerView: 1 },
+      480:  { slidesPerView: 2 },
+      768:  { slidesPerView: 3 },
+      1100: { slidesPerView: 4 },
+      1500: { slidesPerView: 5 },
+    },
+    on: {
+      slideChange: function () {
+        var idx   = this.activeIndex + 1;
+        var total = this.slides.length;
+        $('#galleryCounter').text(
+          (idx < 10 ? '0' + idx : idx) + ' / ' +
+          (total < 10 ? '0' + total : total)
+        );
       }
-  	});
-    */ 
-
-    $(window).resize(function(){
-
-
-    if( $(window).width() < 541 ){
-
-    		$(".frame-container").removeClass( "size_1 size_2 size_0" );
-      	$(".frame-container").addClass( "size_2");
-
-    }
-
-    if( isTouch() ){
-  	$(".frame-container").addClass("mobile");
-    }else{
-  	$(".frame-container").removeClass("mobile");
-    }
-
-    });
-
-  	/* paralax effect */
-  	$("body").mousemove(function(e) {
-    parallaxIt(e, ".frame-container", -50);
-    /*
-  	parallaxIt(e, ".introtext", -30);
-    parallaxIt(e, ".et_pb_blurb_content", -50);
-    parallaxIt(e, ".et_pb_slider", -70);
-    parallaxIt(e, "img", -30);
-  	*/
+    },
+    speed: 480,
   });
 
-  function parallaxIt(e, target, movement) {
-    var $this = $("body");
-    var relX = e.pageX - $this.offset().left;
-    var relY = e.pageY - $this.offset().top;
+  /* prevent vertical capture when scrolling horizontal gallery */
+  document.querySelector('#swiperH').addEventListener('wheel', function (e) {
+    if (Math.abs(e.deltaX) > Math.abs(e.deltaY) * 0.5) e.stopPropagation();
+  }, { passive: true });
 
-    TweenMax.to(target, 1, {
-      x: (relX - $this.width() / 2) / $this.width() * movement,
-      y: (relY - $this.height() / 2) / $this.height() * movement
-    });
-  }
-
-
+  /* topbar nav */
+  $('#topbar nav a').on('click', function (e) {
+    e.preventDefault();
+    var map = { slide1: 0, slide2: 1, slide3: 2, slide4: 3 };
+    var hash = $(this).attr('href').replace('#', '');
+    if (map[hash] !== undefined) swiperV.slideTo(map[hash]);
   });
 
-  </script>
+  /* "View Work" CTA */
+  $('#btnWork').on('click', function (e) {
+    e.preventDefault();
+    swiperV.slideTo(2);
+  });
 
+});
+</script>
 </body>
 </html>
+
